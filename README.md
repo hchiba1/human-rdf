@@ -1,4 +1,4 @@
-# human-rdf
+# Human NCBI Gene RDF
 
 ## Original data
 
