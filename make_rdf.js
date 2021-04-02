@@ -8,7 +8,7 @@ program
   .arguments('<original_data_file>')
   .parse(process.argv);
 
-if (program.args.length == 0) {
+if (program.args.length === 0) {
   program.help();
 }
 const opts = program.opts();
@@ -55,17 +55,17 @@ function makeMap(fields) {
 }
 
 function printPrefix() {
-  console.log("@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .");
-  console.log("@prefix dct: <http://purl.org/dc/terms/> .");
-  console.log("@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .");
-  console.log("@prefix ncbigene: <http://identifiers.org/ncbigene/> .");
-  console.log("@prefix taxid: <http://identifiers.org/taxonomy/> .");
-  console.log("@prefix hgnc: <http://identifiers.org/ngnc/> .");
-  console.log("@prefix mim: <http://identifiers.org/mim/> .");
-  console.log("@prefix mirbase: <http://identifiers.org/mirbase/> .");
-  console.log("@prefix ensembl: <http://identifiers.org/ensembl/> .");
-  console.log("@prefix nuc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/> .");
-  console.log("@prefix : <http://purl.org/net/orthordf/hOP/ontology#> .");
+  console.log('@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .');
+  console.log('@prefix dct: <http://purl.org/dc/terms/> .');
+  console.log('@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .');
+  console.log('@prefix ncbigene: <http://identifiers.org/ncbigene/> .');
+  console.log('@prefix taxid: <http://identifiers.org/taxonomy/> .');
+  console.log('@prefix hgnc: <http://identifiers.org/ngnc/> .');
+  console.log('@prefix mim: <http://identifiers.org/mim/> .');
+  console.log('@prefix mirbase: <http://identifiers.org/mirbase/> .');
+  console.log('@prefix ensembl: <http://identifiers.org/ensembl/> .');
+  console.log('@prefix nuc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/> .');
+  console.log('@prefix : <http://purl.org/net/orthordf/hOP/ontology#> .');
 }
 
 function printTriples(entry) {
@@ -75,7 +75,7 @@ function printTriples(entry) {
       !isValidString(entry.get('description')) ||
       !isValidString(entry.get('Symbol_from_nomenclature_authority')) ||
       !isValidString(entry.get('Full_name_from_nomenclature_authority')) ||
-      entry.get('LocusTag') != '-'
+      entry.get('LocusTag') !== '-'
      ) {
     console.error(entry);
     process.exit(1);
@@ -90,7 +90,7 @@ function printTriples(entry) {
     // console.log(`    skos:prefLabel "${entry.get('Symbol_from_nomenclature_authority')}" ;`);
     console.log(`    nuc:standard_name "${entry.get('Symbol_from_nomenclature_authority')}" ;`);
   }
-  if (entry.get('Synonyms') != '-') {
+  if (entry.get('Synonyms') !== '-') {
     const synonyms = entry.get('Synonyms').split('|')
           .map((d) => mapToStr(d))
           .join(' ,\n' + ' '.repeat(8));
@@ -98,13 +98,13 @@ function printTriples(entry) {
     console.log(`    nuc:gene_synonym ${synonyms} ;`);
   }
   console.log(`    dct:description "${entry.get('description')}" ;`);
-  if (entry.get('Other_designations') != '-') {
+  if (entry.get('Other_designations') !== '-') {
     const other_designations = entry.get('Other_designations').split('|')
           .map((d) => mapToStr(d))
           .join(' ,\n' + ' '.repeat(8));
     console.log(`    dct:alternative ${other_designations} ;`);
   }
-  if (entry.get('dbXrefs') != '-') {
+  if (entry.get('dbXrefs') !== '-') {
     const seeAlso = entry.get('dbXrefs').split('|')
           .map((d) => makeURI(d)).filter(x => x)
           .join(' ,\n' + ' '.repeat(8));
@@ -125,10 +125,10 @@ function printTriples(entry) {
     console.error(entry);
     process.exit(1);
   }
-  if (entry.get('Full_name_from_nomenclature_authority') != '-') {
+  if (entry.get('Full_name_from_nomenclature_authority') !== '-') {
     console.log(`    :fullName "${entry.get('Full_name_from_nomenclature_authority')}" ;`);
   }
-  if (entry.get('dbXrefs') != '-') {
+  if (entry.get('dbXrefs') !== '-') {
     let dbXrefs = entry.get('dbXrefs').split('|')
         .map((d) => filterStr(d)).filter(x => x);
     if (dbXrefs.length !== 0) {
@@ -136,9 +136,9 @@ function printTriples(entry) {
       console.log(`    nuc:db_xref ${dbXrefs} ;`);
     }
   }
-  if (entry.get('Feature_type') != '-') {
+  if (entry.get('Feature_type') !== '-') {
     const feature_type = entry.get('Feature_type').split('|')
-          .map((d) => `"${d}"`)
+          .map((d) => mapToStr(d))
           .join(' ,\n' + ' '.repeat(8));
     console.log(`    :featureType ${feature_type} ;`);
   }
@@ -177,7 +177,7 @@ function filterStr(str) {
 }
 
 function isValidString(str) {
-  if (/^[-\w @\.'/+:,();>?\[\]#*&~{}=\^]+$/.test(str)) {
+  if (/^[\-\w @\.'/+:,();>?\[\]#*&~{}=\^]+$/.test(str)) {
     return true;
   } else {
     return false;
@@ -186,7 +186,7 @@ function isValidString(str) {
 
 function mapToStr(str) {
   if (isValidString(str)) {
-    return `"${str}"`
+    return `"${str}"`;
   } else {
     console.error(str);
     process.exit(1);
