@@ -4,6 +4,8 @@
 
 ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz
 
+See `./original_data/README` for details.
+
 ## RDF
 ```
 cd human-ncbigene-rdf
