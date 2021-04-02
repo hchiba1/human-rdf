@@ -3,4 +3,8 @@
 ## Original data
 
 ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz
-(2.8M Feb 10 03:44)
+
+```
+npm install
+./make_rdf.js original_data/Homo_sapiens.gene_info > created_rdf/Homo_sapiens.gene_info.ttl
+```
