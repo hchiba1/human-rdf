@@ -4,6 +4,7 @@
 
 ftp.ncbi.nlm.nih.gov/gene/DATA/GENE_INFO/Mammalia/Homo_sapiens.gene_info.gz
 
+## RDF
 ```
 cd human-ncbigene-rdf
 npm install
