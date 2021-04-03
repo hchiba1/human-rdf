@@ -60,7 +60,7 @@ function printPrefix() {
   console.log('@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .');
   console.log('@prefix ncbigene: <http://identifiers.org/ncbigene/> .');
   console.log('@prefix taxid: <http://identifiers.org/taxonomy/> .');
-  console.log('@prefix hgnc: <http://identifiers.org/ngnc/> .');
+  console.log('@prefix hgnc: <http://identifiers.org/hgnc/> .');
   console.log('@prefix mim: <http://identifiers.org/mim/> .');
   console.log('@prefix mirbase: <http://identifiers.org/mirbase/> .');
   console.log('@prefix ensembl: <http://identifiers.org/ensembl/> .');
