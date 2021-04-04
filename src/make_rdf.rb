@@ -14,23 +14,19 @@ puts '@prefix nuc: <http://ddbj.nig.ac.jp/ontologies/nucleotide/> .'
 puts '@prefix : <http://purl.org/net/orthordf/hOP/ontology#> .'
 
 def format_date(date)
-    r = date.match(/^(\d\d\d\d)(\d\d)(\d\d)$/)
-    y = r[1]
-    m = r[2]
-    d = r[3]
-    return "#{y}-#{m}-#{d}"
+    r = date.match(/^(\d{4})(\d{2})(\d{2})$/)
+    return "#{r[1]}-#{r[2]}-#{r[3]}"
 end
 
 def format_str_array(str)
-    array = str.split("|")
-    str_array = array.map{|x| "\"#{x}\""}
-    return str_array.join(" ,\n        ")
+    return str.split("|")
+              .map{|x| "\"#{x}\""}
+              .join(" ,\n        ")
 end
 
 def format_links(str)
-    array = str.split("|")
     str_array = []
-    for a in array
+    for a in str.split("|")
         if a.match(/^MIM:(\d+)$/)
             r = a.match(/^MIM:(\d+)$/)
             str_array.push("mim:#{r[1]}")
@@ -49,18 +45,17 @@ def format_links(str)
 end
 
 def filter_str(str)
-    array = str.split("|")
-    links = []
-    for a in array
+    str_array = []
+    for a in str.split("|")
         if a.match(/^MIM:(\d+)$/)
         elsif a.match(/^HGNC:HGNC:(\d+)$/)
         elsif a.match(/^Ensembl:ENSG\d+$/)
         elsif a.match(/^miRBase:MI\d+$/)
         else
-            links.push(a)
+            str_array.push(a)
         end
     end
-    return links.join("|")
+    return str_array.join("|")
 end
 
 header = ""
