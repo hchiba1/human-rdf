@@ -20,13 +20,13 @@ end
 
 def format_str_array(str)
     return str.split("|")
-              .map{|x| "\"#{x}\""}
+              .map { |x| "\"#{x}\"" }
               .join(" ,\n        ")
 end
 
 def format_links(str)
     str_array = []
-    for a in str.split("|")
+    str.split("|").each { |a|
         if a.match(/^MIM:(\d+)$/)
             r = a.match(/^MIM:(\d+)$/)
             str_array.push("mim:#{r[1]}")
@@ -40,13 +40,13 @@ def format_links(str)
             r = a.match(/miRBase:(MI\d+)$/)
             str_array.push("mirbase:#{r[1]}")
         end
-    end
+    }
     return str_array.join(" ,\n        ")
 end
 
 def filter_str(str)
     str_array = []
-    for a in str.split("|")
+    str.split("|").each { |a|
         if a.match(/^MIM:(\d+)$/)
         elsif a.match(/^HGNC:HGNC:(\d+)$/)
         elsif a.match(/^Ensembl:ENSG\d+$/)
@@ -54,13 +54,13 @@ def filter_str(str)
         else
             str_array.push(a)
         end
-    end
+    }
     return str_array.join("|")
 end
 
 header = ""
-File.open(ARGV[0], mode="rt"){|f|
-    f.each_line{|line|
+File.open(ARGV[0], mode="rt") { |f|
+    f.each_line { |line|
         line = line.chomp
         if header == ""
             header = line
